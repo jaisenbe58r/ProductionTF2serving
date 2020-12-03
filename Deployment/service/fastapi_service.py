@@ -8,6 +8,8 @@
 from fastapi import FastAPI, File, UploadFile
 from starlette.middleware.cors import CORSMiddleware
 from werkzeug.utils import secure_filename
+from fastapi.responses import HTMLResponse
+from typing import List
 
 import json
 import numpy as np
@@ -31,9 +33,9 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    # allow_credentials=True,
+    # allow_methods=["*"],
+    # allow_headers=["*"],
 )
 
 def allowed_file(filename):
