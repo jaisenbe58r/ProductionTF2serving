@@ -9,16 +9,16 @@ docker rm $(docker ps -aq)
 
 #Folder with PB model
 cd ~
-export MODEL_PB=$(pwd)/models/tf2x/tensorflow
+export MODEL_PB=$(pwd)/Pebrassos-detection/model/tf2x/tensorflow
 
 #Start Docker Swarm
 docker swarm init
 
 #Start TensorFlow serving with docker-compose:
-cd ~/DEEP-LEARNING_deployment/Deployment-PROD4/docker
+cd $(pwd)/Pebrassos-detection/Deployment/docker
 
 docker stack deploy -c compose-config-PROD.yml PROD-STACK
-
+P   
 # Check services/containers
 docker stack ls
 docker service ls
@@ -31,7 +31,7 @@ http://<public IP>:9001/
 conda activate PROD
 
 #Locate on test folder
-cd ~/DEEP-LEARNING_deployment/Deployment-PROD4/test
+cd $(pwd)/Pebrassos-detection/Deployment/test
 
 #TFserving on gGPR 9500 --> 8500
 python test-tfserving-gRPC-PROD.py \
@@ -52,7 +52,7 @@ sudo systemctl stop docker
 
 ######################### Start FastAPI service  ########################
 # starting the service
-cd ~/DEEP-LEARNING_deployment/Deployment-PROD4/service/
+cd $(pwd)/Pebrassos-detection/Deployment/service
 
 # Activando environment PROD
 conda activate PROD
