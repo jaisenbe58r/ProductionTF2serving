@@ -68,8 +68,8 @@ async def predict(file: UploadFile = File(...)):
         contents = await file.read()
         filename = secure_filename(filename)
         tmpfile = ''.join([UPLOAD_FOLDER ,'/',filename])
-        # with open(tmpfile, 'wb') as f:
-        #     f.write(contents)
+        with open(tmpfile, 'wb') as f:
+            f.write(contents)
         print("\nFilename stored:",tmpfile)
 
         #model
