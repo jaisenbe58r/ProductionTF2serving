@@ -99,3 +99,4 @@ unzip model.zip && rm -rf model.zip && cd ~
 #List downloaded models
 tree ~/models
 ######################################################################
+
