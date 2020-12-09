@@ -69,7 +69,7 @@ Una vez dentro damos de alta todos los puertos utilizados en los servicios del p
 - **9002**: Prometheus.
 - **9003**: Grafana.
 
-![23](docs\images\20_gc_red_3.PNG)
+![23](docs\images\20_gc_red_3.png)
 
 
 Con todos estos pasos ya tendriamos acceso a la maquina virtual del servidor y podriamos proceder a configurar el entorno de trabajo y a dar de alta los servicios de nuestro proyecto.
