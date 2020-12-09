@@ -1,7 +1,15 @@
 
 # Despliegue en producción de un Modelo TF2 de clasificación de imágenes.
 
+El Objetivo de este Post es presentar una solución al despliegue en producción de modelos de deep learning desarrollados en Tensorflow2.
+
 ![Portada](docs/images/08_Deployment_images_v2.png)
+
+ En este caso vamos a utilizar un modelo de clasificación entre dos categorias de animales de compañia: ```Perros```vs ```Gatos```. El jupyter-notebook utilizado para entrenar dicho modelo se en cuentra en la siguiente ruta: []() ***********
+
+## Definición de la Arquitectura
+
+
 
 ## Crear servidor de despliegue
 
