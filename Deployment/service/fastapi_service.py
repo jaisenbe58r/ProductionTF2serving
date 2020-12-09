@@ -16,7 +16,7 @@ import numpy as np
 from tensorflow.keras.preprocessing import image
 
 UPLOAD_FOLDER = 'uploads/images'
-# UPLOAD_FOLDER = '~/Pebrassos-detection/Deployment/service/uploads/images'
+# UPLOAD_FOLDER = '~/ProductionTF2serving/Deployment/service/uploads/images'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 SEED = 99
@@ -73,7 +73,7 @@ async def predict(file: UploadFile = File(...)):
         print("\nFilename stored:",tmpfile)
 
         #model
-        model_name='pebrassos'
+        model_name='pets'
         model_version='1'
         port_HTTP='9501'
         port_gRPC='9500'

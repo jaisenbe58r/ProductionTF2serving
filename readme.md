@@ -178,9 +178,67 @@ docker ps -a  #Containers
 sudo systemctl stop docker
 ```
 
+## Clonar Repositorio del proyecto
+
+Clonamos el repositorio de código del proyecto: [GitHub | ProductionTF2serving](https://github.com/jaisenbe58r/ProductionTF2serving)
+
+```cmd
+#Clone main deployment project:
+cd ~
+git clone https://github.com/jaisenbe58r/ProductionTF2serving.git
+```
 
 
+## Despliegue de servicios con Docker swarm
 
+Docker Swarm es una herramienta integrada en el ecosistema de Docker que permite la gestión de un cluster de servidores. Pone a nuestra disposición una API con la que podemos administrar las  tareas y asignación de recursos de cada contenedor dentro de cada una de las máquinas. Dicha API nos permite gestionar el cluster como si se tratase de una sola máquina Docker.
+
+Para nuestro proyecto, se genera un clúster con docker swarm con 4 replicas del microservicio de ```tensorflow/serving``` para servir las predicciones, 1 visualizador de contenedores docker en el clúster (visualizer), 1 microservicio de monitoreo de servicios (prometheus) y 1 microservicio de consulta y visualización (grafana):
+
+```yml
+version: '3'
+
+services:
+  pets:
+    image: tensorflow/serving
+    ports:
+      - 9500:8500
+      - 9501:8501
+    volumes:
+      - ${MODEL_PB}:/models/pets
+    environment:
+      - MODEL_NAME=pets
+    deploy:
+      replicas: 4
+    command:
+      - --enable_batching=true
+
+  visualizer:
+    image: dockersamples/visualizer
+    ports:
+      - 9001:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9002:9090
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 9003:3000
+    links:
+      - prometheus:prometheus
+    environment:
+      - GF_USERS_ALLOW_SIGN_UP=false
+```
+
+Para poder desplegar el clúster de docker swarm vamos a ejecutar las siguientes lineas de comandos:
 
 
 ```cmd
@@ -194,45 +252,41 @@ docker rm $(docker ps -aq)
 
 #Folder with PB model
 cd ~
-export MODEL_PB=$(pwd)/Pebrassos-detection/model/tf2x/tensorflow
+export MODEL_PB=$(pwd)/ProductionTF2serving/model/tf2x/tensorflow
 
 #Start Docker Swarm
 docker swarm init
 
 #Start TensorFlow serving with docker-compose:
-cd $(pwd)/Pebrassos-detection/Deployment/docker
+cd $(pwd)/ProductionTF2serving/Deployment/docker
 
 docker stack deploy -c compose-config-PROD.yml PROD-STACK
 
 ```
 
+
 ## Chequear servivios activos
+
+Una vez desplejado el clúster con todos los microservicios vamos a chequear que dichos servicios estén activos. Para ello vamos a ejecutar lo siguiente:
 
 ```cmd
 docker stack ls
 docker service ls
 docker container ls
+```
 
-#Visualize servicew on web browser (don't forget open port 9001)
-http://<public IP>:9001/
+Para acceder al visualizador del clúster, basta con introducir en su navegador predeterminado la siguiente ruta:
 
-#Activate PROD environment
-conda activate PROD
+http://```<public IP>```:9001/
 
-#Locate on test folder
-cd $(pwd)/Pebrassos-detection/Deployment/test
 
-#TFserving on gGPR 9500 --> 8500
-python test-tfserving-gRPC-PROD.py /
-    --images $(pwd)/images/img01.jpg,$(pwd)/images/img02.jpg,$(pwd)/images/img03.jpg /
-    --model flowers /
-    --version 1 /
-    --port 9500
+Para eliminar el clúster de docker swarm ejecuta lo siguiente:
 
+```cmd
 # Remove stack
 docker stack rm PROD-STACK
 
-#Leave docker swarm
+# Leave docker swarm
 docker swarm leave --force
 
 # Stop docker
@@ -241,38 +295,51 @@ sudo systemctl stop docker
 
 ## Servicio FastAPI 
 
+El servicio FastAPI se despliega externamente al clúster de docker swarm dentro del entorno virtual de Producción. Este servicio es la API que recibe las peticiones ```HTTP``` de los clientes y se encarga de comunicarse directamente con los microservicios servidores del modelo para realizar las predicciones y posteriormente devolver el resultado al cliente.
+
+Para desplegar este el servicio Fast API procedemos de la siguiente manera:
+
 ```cmd
 #### Start FastAPI service  ####
 
 # starting the service
-cd $(pwd)/Pebrassos-detection/Deployment/service
+cd $(pwd)/ProductionTF2serving/Deployment/service
 
 # Activando environment PROD
 conda activate PROD
 
 # starting web-service
 uvicorn fastapi_service_PROD:app --port 9000 --host 0.0.0.0
+```
 
-#Stop Web Service: Ctrl + C
+En caso de querer detener este servicio se ejecutará:
 
-#Deactivate PROD env
+```cmd
+# Stop Web Service: Ctrl + C
+
+# Deactivate PROD env
 conda deactivate
 ```
 
 ## Monitorización
 
-```cmd
+Como hemos comentado anteriormente, hemos desplegado el microservicio de grafana y prometheus que nos permiten almacenar y visualizar las metricas del cluster en funcionamiento que previamente configuremos.
+
+Para acceder 
+
+```
 #### Monitoring ####
 
-#Prometheus: IP:9002
+# Prometheus: IP:9002
 
-#Grafana: IP:9003
-#>> admin/admin
-#Grafana Datasource:
-#>> public-ip:9002
-#>> server
+# Grafana: IP:9003
+# >> admin/admin
 
-#Grafana dashboards to import
+# Grafana Datasource:
+# >> public-ip:9002
+# >> server
+
+# Grafana dashboards to import
 https://grafana.com/grafana/dashboards?dataSource=prometheus
 
 ```

@@ -1,15 +1,15 @@
 version: '3'
 
 services:
-  pebrassos:
+  pets:
     image: tensorflow/serving
     ports:
       - 9500:8500
       - 9501:8501
     volumes:
-      - ${MODEL_PB}:/models/pebrassos
+      - ${MODEL_PB}:/models/pets
     environment:
-      - MODEL_NAME=pebrassos
+      - MODEL_NAME=pets
     deploy:
       replicas: 1
     command:
