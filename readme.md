@@ -3,8 +3,79 @@
 
 ![Portada](docs/images/08_Deployment_images.png)
 
-## Configuración del entorno de trabajo
+## Crear servidor de despliegue
 
+En primer lugar, se va a crear el servidor de despliegue en producción que vams a utiloizar en este proyecto. Para ello necesitamos crear una cuenta en Google Cloud Plataform, donde nos dan la posibilidad de crearnos una cuenta gratuita de 90 días con 300 USD en crédito para poder utilizar servicios como Compute Engine, Cloud Storage y BigQuery.
+
+Para acceder visite el siguiente enlace: https://console.cloud.google.com/
+
+
+Una vez registrados, nos debe aparecer la página principal con el Dashboard general de la aplicación:
+
+![1](docs\images\1_gc.PNG)
+
+Seguidamente rocedemos a crear un nuevo proyecto de trabajo, pulsamos sobre el desplegable de proyectos, ```Despliegue TF2x``` en mi caso, y nos aparece la siguiente ventana emergente:
+
+![2](docs\images\2_gc_crear_proyecto.PNG)
+
+Pinchamos sobre ```NUEVO PROYECTO``` y nos aparece la ventana creación de un nuevo proyecto. Aquí asignamos el nombre que queramos para nuestro proyecto, en mi caso ```Despliegue TF2x```:
+
+![3](docs\images\3_gc_crear_proyecto.PNG)
+
+A continuación, vamos a crear la maquina virtual para el despliegue. En este caso vamos a utilizar una máquina con el so de Centos7. Para poder crear y configurar dicha máquina, primero hacemos una búsqueda ```Centos```y seleccionamos la ```CentOS 7```que vamos a dar de alta:
+
+![5](docs\images\5_gc_crear_mv.PNG)
+
+Una vez seleccionada nos aparece la siguiente ventana donde debemos iniciar la maquina pulsando sobre el botón ```iniciar```:
+
+![6](docs\images\6_gc_iniciar_mv.PNG)
+
+Una vez dentro, procedemos a configurar la máquina. en nuestro caso vamos a configurar el Tipo de máquina y su cortafuegos para permitir peticiones HTTP:
+
+**Tipo de máquina**: e2-standard-4 (4 vCPU, 16 GB de memoria)
+
+![8](docs\images\8_gc_conf_mv_1.PNG)
+
+**Cortafuegos**: Permitir el tráfico HTTP.
+
+![9](docs\images\9_gc_conf_mv_2.PNG)
+
+Una vez configurada nos aparecera la siguiente ventana con nuestra máquina:
+
+![10](docs\images\10_gc_end.PNG)
+
+Como podeis observar también nos indica la IP externa de la máquina. Para acceder la la consola necesitaremos pulsar en el botón de ```PLAY``` y en el desplegable de ```SSH`` seleccionar la opción de abrir en una nueva pestaña del navegador:
+
+![12](docs\images\12_gc_cmd.PNG)
+
+Con ello, ya tenemos acceso a la consola de nuestro servidor, pero antes de seguir nos haria falta configurar las reglas del cortafuegos para permitir el acceso a través de los puertos de cada servicio.
+
+La forma de acceder a esta configuración es pulsando en el desplegable de ```SSH``` en la opción de ```ver detalles de red```:
+
+![20](docs\images\20_gc_red.PNG)
+
+Una vez dentro, pinchamos sobre ```default-allow-http```:
+
+![21](docs\images\20_gc_red_1.PNG)
+
+Seguidamente damos click a la opción de ```EDITAR```:
+
+![22](docs\images\20_gc_red_2.PNG)
+
+Una vez dentro damos de alta todos los puertos utilizados en los servicios del proyecto:
+
+- **9000**: API del servidor.
+- **9001**: Visualizador de microservicios.
+- **9002**: Prometheus.
+- **9003**: Grafana.
+
+![23](docs\images\20_gc_red_3.PNG)
+
+
+Con todos estos pasos ya tendriamos acceso a la maquina virtual del servidor y podriamos proceder a configurar el entorno de trabajo y a dar de alta los servicios de nuestro proyecto.
+
+
+## Configuración del entorno de trabajo
 
 Una vez ...
 ```cmd
