@@ -1,7 +1,7 @@
 
 # Despliegue en producción de un Modelo TF2 de clasificación de imágenes.
 
-![Portada](docs\images\08_Deployment_images_v2.png)
+![Portada](docs/images/08_Deployment_images_v2.png)
 
 ## Crear servidor de despliegue
 
