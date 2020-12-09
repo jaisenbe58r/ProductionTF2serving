@@ -56,11 +56,11 @@ La forma de acceder a esta configuración es pulsando en el desplegable de ```SS
 
 Una vez dentro, pinchamos sobre ```default-allow-http```:
 
-![21](docs/images/20_gc_red_1.PNG)
+![21](docs/images/21_gc_red_1.PNG)
 
 Seguidamente damos click a la opción de ```EDITAR```:
 
-![22](docs/images/20_gc_red_2.PNG)
+![22](docs/images/22_gc_red_2.PNG)
 
 Una vez dentro damos de alta todos los puertos utilizados en los servicios del proyecto:
 
@@ -69,7 +69,7 @@ Una vez dentro damos de alta todos los puertos utilizados en los servicios del p
 - **9002**: Prometheus.
 - **9003**: Grafana.
 
-![23](docs/images/20_gc_red_3.PNG)
+![23](docs/images/23_gc_red_3.PNG)
 
 
 Con todos estos pasos ya tendriamos acceso a la maquina virtual del servidor y podriamos proceder a configurar el entorno de trabajo y a dar de alta los servicios de nuestro proyecto.
@@ -77,7 +77,12 @@ Con todos estos pasos ya tendriamos acceso a la maquina virtual del servidor y p
 
 ## Configuración del entorno de trabajo
 
-Una vez ...
+Una vez creado la maquina virtual del servidor procedemos a configurar el entorno de trabajo. Para ello abrimos la consola tal y como hemos comentado en el apartado anterior.
+
+### Configuración Centos 7
+
+En primer lugar instalamos el entorno virtual de ```miniconda``` para configurar el entorno virtual de trabajo en producción. Procedemos pues a introducir las siguientes lineas de comandos en la consola:
+
 ```cmd
 ####  CentOS Configuration ####
 
@@ -89,19 +94,21 @@ sudo yum install -y zip unzip nano git tree wget
 curl -LO https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh ./Miniconda3-latest-Linux-x86_64.sh
 
-#Loading environment variables:
+# Loading environment variables:
 source ~/.bashrc
 
-#Deactivate current environment (base):
+# Deactivate current environment (base):
 conda deactivate
 ```
 
-A continuación se crea el entrono de trabajo de producción ....
+### Entorno Virtual de trabajo
+
+A continuación se crea y se configura el entorno de trabajo de producción sobre el cual desplegaremos la API del servidor:
 
 ```cmd
 #### Create PROD Environment ####
 
-#Create an environment called "PROD" and install Python
+# Create an environment called "PROD" and install Python
 conda create -n PROD pip python=3.7.0
 
 #Activate PROD Environment
@@ -125,10 +132,55 @@ python -c "import platform; print('/nPython: ',platform.python_version())"
 python -c "import tensorflow as tf; print('TensorFlow: ',tf.__version__)"
 python -c "import fastapi; print('FastAPI: ', fastapi.__version__)"
 
-#Deactiavate current environment:
+# Deactivate current environment:
 conda deactivate
-
 ```
+
+### Instalación y configuración de Docker
+
+A continuación procedemos a instalar y configurar Docker que nos permitirá desplegar nuestros servicios como microservicios en Docker:
+
+```cmd
+#### Docker installation ####
+# Reference: https://docs.docker.com/install/linux/docker-ce/centos/
+
+# Install pre-requirements:
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+
+# Add docker repo:
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+# Install docker
+sudo yum install -y docker-ce docker-ce-cli containerd.io
+
+# Start Docker service
+sudo systemctl start docker
+
+# Validate Docker version
+docker --version
+
+# Post installation configuration
+# sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+# Download 'hello-world' docker image
+docker pull hello-world
+
+# Create a docker container from 'hello-world' image'
+docker run hello-world
+
+# List Docker objects
+docker images #Images
+docker ps -a  #Containers
+
+#Stop Docker service
+sudo systemctl stop docker
+```
+
+
+
+
 
 
 ```cmd
