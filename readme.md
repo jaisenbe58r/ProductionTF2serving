@@ -12,55 +12,55 @@ Para acceder visite el siguiente enlace: https://console.cloud.google.com/
 
 Una vez registrados, nos debe aparecer la página principal con el Dashboard general de la aplicación:
 
-![1](docs\images\1_gc.PNG)
+![1](docs/images/1_gc.PNG)
 
 Seguidamente rocedemos a crear un nuevo proyecto de trabajo, pulsamos sobre el desplegable de proyectos, ```Despliegue TF2x``` en mi caso, y nos aparece la siguiente ventana emergente:
 
-![2](docs\images\2_gc_crear_proyecto.PNG)
+![2](docs/images/2_gc_crear_proyecto.PNG)
 
 Pinchamos sobre ```NUEVO PROYECTO``` y nos aparece la ventana creación de un nuevo proyecto. Aquí asignamos el nombre que queramos para nuestro proyecto, en mi caso ```Despliegue TF2x```:
 
-![3](docs\images\3_gc_crear_proyecto.PNG)
+![3](docs/images/3_gc_crear_proyecto.PNG)
 
 A continuación, vamos a crear la maquina virtual para el despliegue. En este caso vamos a utilizar una máquina con el so de Centos7. Para poder crear y configurar dicha máquina, primero hacemos una búsqueda ```Centos```y seleccionamos la ```CentOS 7```que vamos a dar de alta:
 
-![5](docs\images\5_gc_crear_mv.PNG)
+![5](docs/images/5_gc_crear_mv.PNG)
 
 Una vez seleccionada nos aparece la siguiente ventana donde debemos iniciar la maquina pulsando sobre el botón ```iniciar```:
 
-![6](docs\images\6_gc_iniciar_mv.PNG)
+![6](docs/images/6_gc_iniciar_mv.PNG)
 
 Una vez dentro, procedemos a configurar la máquina. en nuestro caso vamos a configurar el Tipo de máquina y su cortafuegos para permitir peticiones HTTP:
 
 **Tipo de máquina**: e2-standard-4 (4 vCPU, 16 GB de memoria)
 
-![8](docs\images\8_gc_conf_mv_1.PNG)
+![8](docs/images/8_gc_conf_mv_1.PNG)
 
 **Cortafuegos**: Permitir el tráfico HTTP.
 
-![9](docs\images\9_gc_conf_mv_2.PNG)
+![9](docs/images/9_gc_conf_mv_2.PNG)
 
 Una vez configurada nos aparecera la siguiente ventana con nuestra máquina:
 
-![10](docs\images\10_gc_end.PNG)
+![10](docs/images/10_gc_end.PNG)
 
 Como podeis observar también nos indica la IP externa de la máquina. Para acceder la la consola necesitaremos pulsar en el botón de ```PLAY``` y en el desplegable de ```SSH`` seleccionar la opción de abrir en una nueva pestaña del navegador:
 
-![12](docs\images\12_gc_cmd.PNG)
+![12](docs/images/12_gc_cmd.PNG)
 
 Con ello, ya tenemos acceso a la consola de nuestro servidor, pero antes de seguir nos haria falta configurar las reglas del cortafuegos para permitir el acceso a través de los puertos de cada servicio.
 
 La forma de acceder a esta configuración es pulsando en el desplegable de ```SSH``` en la opción de ```ver detalles de red```:
 
-![20](docs\images\20_gc_red.PNG)
+![20](docs/images/20_gc_red.PNG)
 
 Una vez dentro, pinchamos sobre ```default-allow-http```:
 
-![21](docs\images\20_gc_red_1.PNG)
+![21](docs/images/20_gc_red_1.PNG)
 
 Seguidamente damos click a la opción de ```EDITAR```:
 
-![22](docs\images\20_gc_red_2.PNG)
+![22](docs/images/20_gc_red_2.PNG)
 
 Una vez dentro damos de alta todos los puertos utilizados en los servicios del proyecto:
 
@@ -69,7 +69,7 @@ Una vez dentro damos de alta todos los puertos utilizados en los servicios del p
 - **9002**: Prometheus.
 - **9003**: Grafana.
 
-![23](docs\images\20_gc_red_3.png)
+![23](docs/images/20_gc_red_3.PNG)
 
 
 Con todos estos pasos ya tendriamos acceso a la maquina virtual del servidor y podriamos proceder a configurar el entorno de trabajo y a dar de alta los servicios de nuestro proyecto.
@@ -121,7 +121,7 @@ pip install python-multipart
 pip install pillow #Pil image needed for tf.keras image
 
 #Testing tools installation version:
-python -c "import platform; print('\nPython: ',platform.python_version())"
+python -c "import platform; print('/nPython: ',platform.python_version())"
 python -c "import tensorflow as tf; print('TensorFlow: ',tf.__version__)"
 python -c "import fastapi; print('FastAPI: ', fastapi.__version__)"
 
@@ -171,10 +171,10 @@ conda activate PROD
 cd $(pwd)/Pebrassos-detection/Deployment/test
 
 #TFserving on gGPR 9500 --> 8500
-python test-tfserving-gRPC-PROD.py \
-    --images $(pwd)/images/img01.jpg,$(pwd)/images/img02.jpg,$(pwd)/images/img03.jpg \
-    --model flowers \
-    --version 1 \
+python test-tfserving-gRPC-PROD.py /
+    --images $(pwd)/images/img01.jpg,$(pwd)/images/img02.jpg,$(pwd)/images/img03.jpg /
+    --model flowers /
+    --version 1 /
     --port 9500
 
 # Remove stack
