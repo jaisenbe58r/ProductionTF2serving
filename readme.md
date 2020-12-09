@@ -1,7 +1,7 @@
 
 # Despliegue en producción de un Modelo TF2 de clasificación de imágenes.
 
-![Portada](docs/images/08_Deployment_images.png)
+![Portada](docs\images\08_Deployment_images_v2.png)
 
 ## Crear servidor de despliegue
 
@@ -343,3 +343,7 @@ Para acceder
 https://grafana.com/grafana/dashboards?dataSource=prometheus
 
 ```
+
+## 
+
+curl -i -X POST -F "file=@0f8c1af582.jpg" http://34.69.28.27:9000/model/predict/

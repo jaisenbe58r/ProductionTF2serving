@@ -1,4 +1,4 @@
 # Llamada al servicio CURL
 {% comment %} curl -i -X POST -F "file=@<image-path>" http://<public-ip>:9000/model/predict/ {% endcomment %}
 {% comment %} curl -i -X POST -F "file=@<image-path>" http://34.68.50.195:9000/model/predict/ {% endcomment %}
-curl -i -X POST -F "file=@0f8c1af582.jpg" http://34.69.28.27:5000/model/predict/
+curl -i -X POST -F "file=@0f8c1af582.jpg" http://34.69.28.27:9000/model/predict/
