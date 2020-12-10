@@ -5,10 +5,24 @@ El Objetivo de este Post es presentar una solución al despliegue en producción
 
 ![Portada](docs/images/08_Deployment_images_v2.png)
 
- En este caso vamos a utilizar un modelo de clasificación entre dos categorias de animales de compañia: ```Perros```vs ```Gatos```. El jupyter-notebook utilizado para entrenar dicho modelo se en cuentra en la siguiente ruta: []() ***********
+ En este caso vamos a utilizar un modelo de clasificación entre dos categorias de animales de compañia: ```Perros``` vs ```Gatos```. El jupyter-notebook utilizado para entrenar dicho modelo se en cuentra en la siguiente ruta: []() ***********
 
 ## Definición de la Arquitectura
 
+Se ha optado por una arquitectura basada en microservicios a partir de un clúster de docker swarm. Dicho clúster esta desplegado sobre un servidor CentOS 7 en una maquina virtual del Compute Engine de Google cloud, donde también estará desplegada la API de FastAPI encargada de gestionar todas las peticiones HTTP recibidas de los clientes. Esta API será el punto de acceso a la aplicación desde el exterior, a partir de la cual se podrá enviar una imagen a procesar y posteriormente recibir las prediccionas tras el proceso de inferencia realizado en los microservicios de TensorflowServing.
+
+Estos microservicios de TensorflowServing se encargan de hacer inferencia de la imagen recibida sobre el modelo contenido en ellos que previamente hemos generado a partir del proceso de despliegue.
+
+También se ha añadido el microservicio ```visualizer``` que nos permitirá monitorizar los microservicios en ejecución dentro del clúster:
+
+
+
+
+A su vez, se integran también los microservicios de grafana y prometheus, encargados de administrar y generar dashboards dinámicos para mostrar las métricas configuradas del clúster.
+
+
+
+Con ello, estaremos desplegando en producción una solución de deep learning basada en microservicios de alta disponibilidad, capaz de hacer frente a un considerable volumen de peticiones HTTP de diferentes clientes. También se dota a esta arquitectura de una alta capacidad de escalamiento, puesto que el clúster de docker swarm nos permite hacer réplicas de cada microservicio en particular.
 
 
 ## Crear servidor de despliegue
@@ -201,7 +215,7 @@ git clone https://github.com/jaisenbe58r/ProductionTF2serving.git
 
 Docker Swarm es una herramienta integrada en el ecosistema de Docker que permite la gestión de un cluster de servidores. Pone a nuestra disposición una API con la que podemos administrar las  tareas y asignación de recursos de cada contenedor dentro de cada una de las máquinas. Dicha API nos permite gestionar el cluster como si se tratase de una sola máquina Docker.
 
-Para nuestro proyecto, se genera un clúster con docker swarm con 4 replicas del microservicio de ```tensorflow/serving``` para servir las predicciones, 1 visualizador de contenedores docker en el clúster (visualizer), 1 microservicio de monitoreo de servicios (prometheus) y 1 microservicio de consulta y visualización (grafana):
+Para nuestro proyecto, se genera un clúster con docker swarm con 4 replicas del microservicio de ```tensorflow/serving``` para servir las predicciones, 1 visualizador de contenedores docker en el clúster (```visualizer```), 1 microservicio de monitoreo de servicios (```prometheus```) y 1 microservicio de consulta y visualización (```grafana```):
 
 ```yml
 version: '3'
@@ -352,6 +366,11 @@ https://grafana.com/grafana/dashboards?dataSource=prometheus
 
 ```
 
-## 
+## Prueba del modelo en Producción
 
-curl -i -X POST -F "file=@0f8c1af582.jpg" http://34.69.28.27:9000/model/predict/
+Para realizar una prueba sobre el modelo desplegado en producción, vamos a lanzar una petición HTTP a la API desplegada para este fin, a través de: ```http://<IP PUBLICA>:9000/model/predict/```. 
+
+Lanzamos desde la consola la siguiente liea de comandos para predecir el resultado de la imagen con la ruta ```client\image_example.jpg```:
+```cmd
+curl -i -X POST -F "file=@client\image_example.jpg" http://<IP PUBLICA>:9000/model/predict/
+```
