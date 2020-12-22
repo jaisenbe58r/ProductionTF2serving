@@ -7,6 +7,10 @@ El Objetivo de este Post es presentar una solución al despliegue en producción
 
  En este caso vamos a utilizar un modelo de clasificación entre dos categorias de animales de compañia: ```Perros``` vs ```Gatos```. El jupyter-notebook utilizado para entrenar dicho modelo se en cuentra en la siguiente ruta: []() ***********
 
+
+https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb
+
+
 ## Definición de la Arquitectura
 
 Se ha optado por una arquitectura basada en microservicios a partir de un clúster de docker swarm. Dicho clúster esta desplegado sobre un servidor CentOS 7 en una maquina virtual del Compute Engine de Google cloud, donde también estará desplegada la API de FastAPI encargada de gestionar todas las peticiones HTTP recibidas de los clientes. Esta API será el punto de acceso a la aplicación desde el exterior, a partir de la cual se podrá enviar una imagen a procesar y posteriormente recibir las prediccionas tras el proceso de inferencia realizado en los microservicios de TensorflowServing.
@@ -210,12 +214,50 @@ cd ~
 git clone https://github.com/jaisenbe58r/ProductionTF2serving.git
 ```
 
+Vamos a proceder a descargar el modelo previamente entrenado a partir del siguiente [enlace](https://drive.google.com/drive/folders/1Z5m_-IV7xT0JtgQn3HKXn7dS0JpsSYPW?usp=sharing) y posteriormente colocarlo dentro de nuestro proyecto en la siguiente ruta ``/models/tf2x/tensorflow``. Esta ruta actuará como volumen de acceso para el contenedor de la API de tensorflow para acceder al modelo y poder hacer inferencia en el. 
+
+En primer lugar creamos y añadimos la ruta a una variable de entorno de la siguiente manera:
+
+```cmd
+#Folder with PB model
+conda activate PROD
+cd ~
+mkdir -p  models/tf2x/tensorflow
+export MODEL_PB=$(pwd)/models/tf2x/tensorflow
+```
+
+En segundo lugar seleccionamos la opción de ``Upload file`` para subir la carpeta comprimida que se han descargado en el paso anterior:
+
+![23](docs\images\50_subir_archivos.PNG)
+
+![23](docs\images\51_subir_archivos.PNG)
+
+El archivo subido se encuentra en el directorio ``/home/$USER del usuario``.
+
+```cmd
+cd ~
+cd /home/$USER
+ls
+```
+
+Una vez localizado el archivo procedemos a descomprimirlo en el directorio creado en el apartado anterior.
+
+```cmd
+
+mv 1-20201222T160227Z-001.zip $MODEL_PB
+$MODEL_PB
+unzip 1-20201222T160227Z-001.zip && rm -rf 1-20201222T160227Z-001.zip && cd ~
+#List downloaded models
+tree ~/models
+
+```
+
 
 ## Despliegue de servicios con Docker swarm
 
-Docker Swarm es una herramienta integrada en el ecosistema de Docker que permite la gestión de un cluster de servidores. Pone a nuestra disposición una API con la que podemos administrar las  tareas y asignación de recursos de cada contenedor dentro de cada una de las máquinas. Dicha API nos permite gestionar el cluster como si se tratase de una sola máquina Docker.
+Docker Swarm es una herramienta integrada en el ecosistema de Docker que permite la gestión de un cluster de servidores. Pone a nuestra disposición una API con la que podemos administrar las  tareas y asignación de recursos de cada contenedor dentro de cada una de las máquinas. Dicha API nos permite gestionar el clúster como si se tratase de una sola máquina Docker.
 
-Para nuestro proyecto, se genera un clúster con docker swarm con 4 replicas del microservicio de ```tensorflow/serving``` para servir las predicciones, 1 visualizador de contenedores docker en el clúster (```visualizer```), 1 microservicio de monitoreo de servicios (```prometheus```) y 1 microservicio de consulta y visualización (```grafana```):
+Para nuestro proyecto, se genera un clúster con docker swarm con 4 réplicas del microservicio de ```tensorflow/serving``` para servir las predicciones, 1 visualizador de contenedores docker en el clúster (```visualizer```), 1 microservicio de monitoreo de servicios (```prometheus```) y 1 microservicio de consulta y visualización (```grafana```):
 
 ```yml
 version: '3'
@@ -302,7 +344,7 @@ Para acceder al visualizador del clúster, basta con introducir en su navegador 
 http://```<public IP>```:9001/
 
 
-Para eliminar el clúster de docker swarm ejecuta lo siguiente:
+Para eliminar el clúster de docker swarm se procede de la siguiente manera:
 
 ```cmd
 # Remove stack
@@ -345,7 +387,7 @@ conda deactivate
 
 ## Monitorización
 
-Como hemos comentado anteriormente, hemos desplegado el microservicio de grafana y prometheus que nos permiten almacenar y visualizar las metricas del cluster en funcionamiento que previamente configuremos.
+Como hemos comentado anteriormente, hemos desplegado el microservicio de grafana y prometheus que nos permiten almacenar y visualizar las métricas del cluster en funcionamiento que previamente configuremos.
 
 Para acceder 
 
@@ -371,6 +413,7 @@ https://grafana.com/grafana/dashboards?dataSource=prometheus
 Para realizar una prueba sobre el modelo desplegado en producción, vamos a lanzar una petición HTTP a la API desplegada para este fin, a través de: ```http://<IP PUBLICA>:9000/model/predict/```. 
 
 Lanzamos desde la consola la siguiente liea de comandos para predecir el resultado de la imagen con la ruta ```client\image_example.jpg```:
+
 ```cmd
 curl -i -X POST -F "file=@client\image_example.jpg" http://<IP PUBLICA>:9000/model/predict/
 ```
