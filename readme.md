@@ -22,7 +22,10 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
     </td>
   </table>
 </div>
-...
+
+
+
+
 
 **Referencias:**
 
