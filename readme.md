@@ -12,14 +12,17 @@ El Objetivo de este Post es presentar una solución al despliegue en producción
 Puede encontralo también preparado para ejecutarse en google colab a partir del siguiente [enlace](
 https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb):
 
-<table class="tfo-notebook-buttons" align="left">
-  <td>
-    <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/iAApi-QAS-BERT/blob/main/SQUAD_es_GPU.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
-  </td>
-  <td>
-    <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
-  </td>
-</table>
+
+  <table class="tfo-notebook-buttons" align="left">
+    <td>
+      <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/iAApi-QAS-BERT/blob/main/SQUAD_es_GPU.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
+    </td>
+    <td>
+      <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
+    </td>
+  </table>
+
+***
 
 **Referencias:**
 
@@ -48,6 +51,7 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
   </td>
 </table>
 
+***
 
 ## Definición de la Arquitectura
 
