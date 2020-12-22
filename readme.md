@@ -1,17 +1,58 @@
 
 # Despliegue en producción de un Modelo TF2 de clasificación de imágenes.
 
+## Introducción
+
 El Objetivo de este Post es presentar una solución al despliegue en producción de modelos de deep learning desarrollados en Tensorflow2.
 
-![Portada](docs/images/08_Deployment_images_v2.png)
 
- En este caso vamos a utilizar un modelo de clasificación entre dos categorias de animales de compañia: ```Perros``` vs ```Gatos```. El jupyter-notebook utilizado para entrenar dicho modelo se en cuentra en la siguiente ruta: []() ***********
+ En este caso vamos a utilizar un modelo de clasificación entre dos categorias de animales de compañia: ```Perros``` vs ```Gatos```.  
+ El jupyter-notebook utilizado para entrenar dicho modelo se en cuentra en la siguiente ruta: ``concept\PipelineClasificationImages.ipynb``
 
+Puede encontralo también preparado para ejecutarse en google colab a partir del siguiente [enlace](
+https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb):
 
-https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb
+<table class="tfo-notebook-buttons" align="left">
+  <td>
+    <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/iAApi-QAS-BERT/blob/main/SQUAD_es_GPU.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
+  </td>
+  <td>
+    <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
+  </td>
+</table>
+
+**Referencias:**
+
+- [Mirko J. Rodríguez - Udemy - Deep Learning aplicado: Despliegue de modelos TensorFlow 2.0](https://www.udemy.com/course/deep-learning-despliegue-tensorflow-mirko-rodriguez/)
+- [Keras.io: Transfer learning & fine-tuning](https://keras.io/guides/transfer_learning/)
+- [Keras.io - Image classification from scratch](https://keras.io/examples/vision/image_classification_from_scratch/#run-inference-on-new-data)
+- [Kaggle Cats and Dogs Dataset](https://www.microsoft.com/en-us/download/details.aspx?id=54765)
+- [keras.io - EfficientNet B0 to B7](https://keras.io/api/applications/efficientnet/)
+
+**Autor**:
+- [Jaime Sendra Berenguer](https://www.jaimesendraberenguer.com/)
+
+<table class="tfo-notebook-buttons" align="left">
+
+  <td>
+    <a target="_blank" href="https://www.linkedin.com/in/jaisenbe/"><img src="https://static.wixstatic.com/media/5ee9eb_93f03193bd484ab9b0c172894922677d~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_93f03193bd484ab9b0c172894922677d~mv2.webp" />Linkedin</a>
+  </td>
+  <td>
+    <a target="_blank" href="https://github.com/jaisenbe58r"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />GitHub</a>
+  </td>
+  <td>
+    <a target="_blank" href="https://medium.com/@jaimesendraberenguer"><img src="https://static.wixstatic.com/media/5ee9eb_8325cf93e20047b7ae2b18c369fd0448~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_8325cf93e20047b7ae2b18c369fd0448~mv2.webp" />Medium Blog</a>
+  </td>
+  <td>
+    <a target="_blank" href="https://www.kaggle.com/jaisenbe58r"><img src="https://static.wixstatic.com/media/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.webp" />Kaggle</a>
+  </td>
+</table>
 
 
 ## Definición de la Arquitectura
+
+
+![Portada](docs/images/08_Deployment_images_v2.png)
 
 Se ha optado por una arquitectura basada en microservicios a partir de un clúster de docker swarm. Dicho clúster esta desplegado sobre un servidor CentOS 7 en una maquina virtual del Compute Engine de Google cloud, donde también estará desplegada la API de FastAPI encargada de gestionar todas las peticiones HTTP recibidas de los clientes. Esta API será el punto de acceso a la aplicación desde el exterior, a partir de la cual se podrá enviar una imagen a procesar y posteriormente recibir las prediccionas tras el proceso de inferencia realizado en los microservicios de TensorflowServing.
 
@@ -245,11 +286,23 @@ Una vez localizado el archivo procedemos a descomprimirlo en el directorio cread
 ```cmd
 
 mv 1-20201222T160227Z-001.zip $MODEL_PB
-$MODEL_PB
+cd $MODEL_PB
 unzip 1-20201222T160227Z-001.zip && rm -rf 1-20201222T160227Z-001.zip && cd ~
 #List downloaded models
 tree ~/models
-
+```
+El directorio ``models/`` quedaria de la siguiente manera:
+```
+/home/$USER/models
+└── tf2x
+    └── tensorflow
+        └── 1
+            ├── assets
+            ├── saved_model.pb
+            └── variables
+                ├── variables.data-00000-of-00001
+                └── variables.index
+                
 ```
 
 
