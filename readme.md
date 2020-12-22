@@ -27,8 +27,7 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
 
 ##
 ##
-##
-##
+
 **Referencias:**
 
 - [Mirko J. Rodríguez - Udemy - Deep Learning aplicado: Despliegue de modelos TensorFlow 2.0](https://www.udemy.com/course/deep-learning-despliegue-tensorflow-mirko-rodriguez/)
@@ -58,6 +57,9 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
 </div>
 
 <div></div>
+
+##
+##
 
 ## Definición de la Arquitectura
 
