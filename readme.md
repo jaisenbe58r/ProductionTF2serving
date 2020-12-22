@@ -22,7 +22,8 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
     </td>
   </table>
 
-<hr>
+<hr style="border:2px;">
+
 
 **Referencias:**
 
@@ -51,7 +52,7 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
   </td>
 </table>
 
-<hr>
+<hr style="border:2px;">
 
 ## Definición de la Arquitectura
 
