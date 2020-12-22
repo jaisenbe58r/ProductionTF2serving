@@ -340,7 +340,7 @@ services:
     environment:
       - MODEL_NAME=pets
     deploy:
-      replicas: 4
+      replicas: 2
     command:
       - --enable_batching=true
 
