@@ -12,15 +12,16 @@ El Objetivo de este Post es presentar una solución al despliegue en producción
 Puede encontralo también preparado para ejecutarse en google colab a partir del siguiente [enlace](
 https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb):
 
-
-<table class="tfo-notebook-buttons" align="left">
-  <td>
-    <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/iAApi-QAS-BERT/blob/main/SQUAD_es_GPU.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
-  </td>
-  <td>
-    <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
-  </td>
-</table>
+<div align="center">
+  <table class="tfo-notebook-buttons" align="left">
+    <td>
+      <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/iAApi-QAS-BERT/blob/main/SQUAD_es_GPU.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
+    </td>
+    <td>
+      <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
+    </td>
+  </table>
+</div>
 
 **Referencias:**
 
@@ -33,20 +34,22 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
 **Autor**:
 - [Jaime Sendra Berenguer](https://www.jaimesendraberenguer.com/)
 
-<table class="tfo-notebook-buttons" align="left">
-  <td>
-    <a target="_blank" href="https://www.linkedin.com/in/jaisenbe/"><img src="https://static.wixstatic.com/media/5ee9eb_93f03193bd484ab9b0c172894922677d~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_93f03193bd484ab9b0c172894922677d~mv2.webp" />Linkedin</a>
-  </td>
-  <td>
-    <a target="_blank" href="https://github.com/jaisenbe58r"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />GitHub</a>
-  </td>
-  <td>
-    <a target="_blank" href="https://medium.com/@jaimesendraberenguer"><img src="https://static.wixstatic.com/media/5ee9eb_8325cf93e20047b7ae2b18c369fd0448~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_8325cf93e20047b7ae2b18c369fd0448~mv2.webp" />Medium Blog</a>
-  </td>
-  <td>
-    <a target="_blank" href="https://www.kaggle.com/jaisenbe58r"><img src="https://static.wixstatic.com/media/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.webp" />Kaggle</a>
-  </td>
-</table>
+<div align="center">
+  <table class="tfo-notebook-buttons" align="left">
+    <td>
+      <a target="_blank" href="https://www.linkedin.com/in/jaisenbe/"><img src="https://static.wixstatic.com/media/5ee9eb_93f03193bd484ab9b0c172894922677d~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_93f03193bd484ab9b0c172894922677d~mv2.webp" />Linkedin</a>
+    </td>
+    <td>
+      <a target="_blank" href="https://github.com/jaisenbe58r"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />GitHub</a>
+    </td>
+    <td>
+      <a target="_blank" href="https://medium.com/@jaimesendraberenguer"><img src="https://static.wixstatic.com/media/5ee9eb_8325cf93e20047b7ae2b18c369fd0448~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_8325cf93e20047b7ae2b18c369fd0448~mv2.webp" />Medium Blog</a>
+    </td>
+    <td>
+      <a target="_blank" href="https://www.kaggle.com/jaisenbe58r"><img src="https://static.wixstatic.com/media/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.webp" />Kaggle</a>
+    </td>
+  </table>
+</div>
 
 
 ## Definición de la Arquitectura
