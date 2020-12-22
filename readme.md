@@ -19,7 +19,7 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
     </td>
     <td>
       <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
-    </td>
+    </td><br>
   </table><br>
 </div>
 
@@ -47,7 +47,7 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
     </td>
     <td>
       <a target="_blank" href="https://www.kaggle.com/jaisenbe58r"><img src="https://static.wixstatic.com/media/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.webp" />Kaggle</a>
-    </td>
+    </td><br>
   </table><br>
 </div>
 
