@@ -12,18 +12,15 @@ El Objetivo de este Post es presentar una solución al despliegue en producción
 Puede encontralo también preparado para ejecutarse en google colab a partir del siguiente [enlace](
 https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb):
 
-<p>
-  <table class="tfo-notebook-buttons" align="left">
-    <td>
-      <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/iAApi-QAS-BERT/blob/main/SQUAD_es_GPU.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
-    </td>
-    <td>
-      <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
-    </td>
-  </table>
-</p>
-<hr style="border:2px;">
 
+<table class="tfo-notebook-buttons" align="left">
+  <td>
+    <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/iAApi-QAS-BERT/blob/main/SQUAD_es_GPU.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
+  </td>
+  <td>
+    <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
+  </td>
+</table>
 
 **Referencias:**
 
@@ -36,8 +33,6 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
 **Autor**:
 - [Jaime Sendra Berenguer](https://www.jaimesendraberenguer.com/)
 
-
-<p>
 <table class="tfo-notebook-buttons" align="left">
   <td>
     <a target="_blank" href="https://www.linkedin.com/in/jaisenbe/"><img src="https://static.wixstatic.com/media/5ee9eb_93f03193bd484ab9b0c172894922677d~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_93f03193bd484ab9b0c172894922677d~mv2.webp" />Linkedin</a>
@@ -52,9 +47,7 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
     <a target="_blank" href="https://www.kaggle.com/jaisenbe58r"><img src="https://static.wixstatic.com/media/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.png/v1/fill/w_42,h_42,al_c,q_85,usm_0.66_1.00_0.01/5ee9eb_0a6d700146bb4712af78dcaa8f5a3b87~mv2.webp" />Kaggle</a>
   </td>
 </table>
-</p>
 
-<hr style="border:2px;">
 
 ## Definición de la Arquitectura
 
