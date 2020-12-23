@@ -15,8 +15,8 @@ import json
 import numpy as np
 from tensorflow.keras.preprocessing import image
 
-# UPLOAD_FOLDER = 'uploads/images'
-UPLOAD_FOLDER = '~/ProductionTF2serving/Deployment/service/uploads/images'
+UPLOAD_FOLDER = 'uploads/images'
+# UPLOAD_FOLDER = '~/ProductionTF2serving/Deployment/service/uploads/images'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 SEED = 99
