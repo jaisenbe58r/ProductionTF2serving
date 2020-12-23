@@ -12,8 +12,8 @@ services:
       - MODEL_NAME=pets
     deploy:
       replicas: 2
-    command:
-      - --enable_batching=true
+    # command:
+    #   - --enable_batching=true
 
   visualizer:
     image: dockersamples/visualizer
