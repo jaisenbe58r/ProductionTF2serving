@@ -45,7 +45,7 @@ predictions = json.loads(json_response.text)['predictions'][0]
 print("\npredictions:",predictions)
 
 index = np.argmax(predictions)
-CLASSES = ['Daisy', 'Dandelion', 'Rose', 'Sunflower', 'Tulip']
+CLASSES = ["Cat", "Dog"] 
 ClassPred = CLASSES[index]
 ClassProb = predictions[index]
 

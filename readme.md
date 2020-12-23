@@ -277,8 +277,8 @@ En primer lugar creamos y añadimos la ruta a una variable de entorno de la sigu
 #Folder with PB model
 conda activate PROD
 cd ~
-mkdir -p  models/tf2x/tensorflow
-export MODEL_PB=$(pwd)/models/tf2x/tensorflow
+export MODEL_PB=$(pwd)/ProductionTF2serving/models/tf2x/tensorflow
+mkdir -p $MODEL_PB
 ```
 
 En segundo lugar seleccionamos la opción de ``Upload file`` para subir la carpeta comprimida que se han descargado en el paso anterior:
@@ -291,7 +291,6 @@ El archivo subido se encuentra en el directorio ``/home/$USER del usuario``.
 
 ```cmd
 cd ~
-cd /home/$USER
 ls
 ```
 
@@ -302,12 +301,13 @@ Una vez localizado el archivo procedemos a descomprimirlo en el directorio cread
 mv 1-20201222T160227Z-001.zip $MODEL_PB
 cd $MODEL_PB
 unzip 1-20201222T160227Z-001.zip && rm -rf 1-20201222T160227Z-001.zip && cd ~
+
 #List downloaded models
-tree ~/models
+tree $(pwd)/ProductionTF2serving/models/
 ```
-El directorio ``models/`` quedaria de la siguiente manera:
+El directorio ``models/`` quedaría de la siguiente manera:
 ```
-/home/$USER/models
+$(pwd)/ProductionTF2serving/models/
 └── tf2x
     └── tensorflow
         └── 1
@@ -381,14 +381,11 @@ sudo systemctl start docker
 #Remove all Containers (optional)
 docker rm $(docker ps -aq)
 
-#Folder with PB model
-cd ~
-export MODEL_PB=$(pwd)/ProductionTF2serving/model/tf2x/tensorflow
-
 #Start Docker Swarm
 docker swarm init
 
 #Start TensorFlow serving with docker-compose:
+cd ~
 cd $(pwd)/ProductionTF2serving/Deployment/docker
 
 docker stack deploy -c compose-config-PROD.yml PROD-STACK
@@ -426,6 +423,26 @@ docker swarm leave --force
 
 # Stop docker
 sudo systemctl stop docker
+```
+
+## Servicio Inferencia de modelos
+
+Vamos a testear 
+
+```cmd
+#Validate deployed models:
+curl http://127.0.0.1:9501/v1/pets/
+
+#Locate on test folder:
+cd ~
+cd $(pwd)/ProductionTF2serving/Deployment/test
+
+#TFserving on HTTP 9501 --> 8501
+python test-tfserving-http.py \
+    --image $(pwd)/images/img01.jpg \
+    --model pets \
+    --version 1 \
+    --port 9501
 ```
 
 ## Servicio FastAPI 

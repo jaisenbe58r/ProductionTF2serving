@@ -57,7 +57,7 @@ request.inputs['vgg16_input'].CopyFrom(tensor_util.make_tensor_proto(test_image,
 result_predict = str(stub.Predict(request, request_timeout))
 # print("\nresult_predict:",result_predict)
 
-CLASSES = ['Daisy', 'Dandelion', 'Rose', 'Sunflower', 'Tulip']
+CLASSES = ["Cat", "Dog"] 
 values = result_predict.split('float_val:')[1:len(CLASSES) + 1]
 
 predictions = []
