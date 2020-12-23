@@ -6,10 +6,9 @@
 El Objetivo de este Post es presentar una solución al despliegue en producción de modelos de deep learning desarrollados en Tensorflow2.
 
 
- En este caso vamos a utilizar un modelo de clasificación entre dos categorias de animales de compañia: ```Perros``` vs ```Gatos```.  
- El jupyter-notebook utilizado para entrenar dicho modelo se en cuentra en la siguiente ruta: ``concept\PipelineClasificationImages.ipynb``
+ En este caso vamos a utilizar un modelo de clasificación de imágenes entre dos categorías de animales de compañia: ```Perros``` vs ```Gatos```.  
 
-Puede encontralo también preparado para ejecutarse en google colab a partir del siguiente [enlace](
+ El jupyter-notebook utilizado para entrenar dicho modelo se en cuentra en la siguiente ruta: ``concept\PipelineClasificationImages.ipynb`` y puede encontralo también preparado para ejecutarse en google colab a partir del siguiente [enlace](
 https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb):
 
 <div align="center">
@@ -28,6 +27,17 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
 ##
 ##
 ##
+
+Este Post esta basado mayoritariamente en el curso [Mirko J. Rodríguez - Udemy - Deep Learning aplicado: Despliegue de modelos TensorFlow 2.0](https://www.udemy.com/course/deep-learning-despliegue-tensorflow-mirko-rodriguez/), donde aprendemos a desplegar desde cero en [Compute Engine de Google cloud](https://cloud.google.com/compute) un modelo de Deep Learning de alta disponibilidad para Producción usando TensorFlow 2.0 y FastAPI.
+
+Lo aprendido en este curso se resume en:
+
+- Realizar el despliegue paso a paso de modelos de clasificación de imágenes usando TensorFlow 2.0.
+- Realizar despliegues en ambientes de Producción (PROD) usando Python + TensorFlow 2.0 + TensorFlow Serving + Docker + Swarm y FastAPI.
+- Entender las consideraciones de dominio técnico a tomar en cuenta para desplegar modelos Deep Learning para el procesamiento de imágenes.
+- Realizar despliegues en ambientes de Desarrollo (DEV) usando Python + TensorFlow 2.0 y Flask en servidores Cloud (Google Cloud Platform - GCP).
+- Realizar llamadas batcheras al modelo y monitorear servidores a través de Prometheus y Grafana.
+
 
 **Referencias:**
 
@@ -68,30 +78,30 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
 
 ![Portada](docs/images/08_Deployment_images_v2.png)
 
-Se ha optado por una arquitectura basada en microservicios a partir de un clúster de docker swarm. Dicho clúster esta desplegado sobre un servidor CentOS 7 en una maquina virtual del Compute Engine de Google cloud, donde también estará desplegada la API de FastAPI encargada de gestionar todas las peticiones HTTP recibidas de los clientes. Esta API será el punto de acceso a la aplicación desde el exterior, a partir de la cual se podrá enviar una imagen a procesar y posteriormente recibir las prediccionas tras el proceso de inferencia realizado en los microservicios de TensorflowServing.
+Se ha optado por una arquitectura basada en microservicios a partir de un clúster de docker swarm. Dicho clúster esta desplegado sobre un servidor ``CentOS 7`` en una maquina virtual del [Compute Engine de Google cloud](https://cloud.google.com/compute), donde también estará desplegada la API de [FastAPI](https://fastapi.tiangolo.com/) encargada de gestionar todas las peticiones ``HTTP`` recibidas de los clientes. Esta API será el punto de acceso a la aplicación desde el exterior, a partir de la cual se podrá enviar una imagen a procesar y posteriormente recibir las predicciones tras el proceso de inferencia realizado en los microservicios de ``TensorflowServing``.
 
-Estos microservicios de TensorflowServing se encargan de hacer inferencia de la imagen recibida sobre el modelo contenido en ellos que previamente hemos generado a partir del proceso de despliegue.
+Estos microservicios de ``TensorflowServing`` se encargan de hacer inferencia de la imagen recibida sobre el modelo contenido en ellos que previamente hemos generado a partir del proceso de entrenamiento en el jupyter notebook comentado en el apartado anterior.
 
 También se ha añadido el microservicio ```visualizer``` que nos permitirá monitorizar los microservicios en ejecución dentro del clúster:
 
 
 
 
-A su vez, se integran también los microservicios de grafana y prometheus, encargados de administrar y generar dashboards dinámicos para mostrar las métricas configuradas del clúster.
+A su vez, se integran también los microservicios de ``grafana`` y ``prometheus``, encargados de administrar y generar dashboards dinámicos para mostrar las métricas configuradas del clúster.
 
 
 
-Con ello, estaremos desplegando en producción una solución de deep learning basada en microservicios de alta disponibilidad, capaz de hacer frente a un considerable volumen de peticiones HTTP de diferentes clientes. También se dota a esta arquitectura de una alta capacidad de escalamiento, puesto que el clúster de docker swarm nos permite hacer réplicas de cada microservicio en particular.
+Con ello, estaremos desplegando en producción una solución de deep learning basada en microservicios de alta disponibilidad, capaz de hacer frente a un considerable volumen de peticiones ``HTTP`` de diferentes clientes. También se dota a esta arquitectura de una alta capacidad de escalamiento, puesto que el clúster de docker swarm nos permite hacer réplicas de cada microservicio en particular.
 
 
 ## Crear servidor de despliegue
 
-En primer lugar, se va a crear el servidor de despliegue en producción que vams a utiloizar en este proyecto. Para ello necesitamos crear una cuenta en Google Cloud Plataform, donde nos dan la posibilidad de crearnos una cuenta gratuita de 90 días con 300 USD en crédito para poder utilizar servicios como Compute Engine, Cloud Storage y BigQuery.
+En primer lugar, se va a crear el servidor de despliegue en producción que vamos a utilizar en este proyecto. Para ello necesitamos crear una cuenta en Google Cloud Plataform, donde nos dan la posibilidad de crearnos una cuenta gratuita de ``90 días`` con ``300 USD`` en crédito para poder utilizar servicios como ``Compute Engine``, ``Cloud Storage`` y ``BigQuery``.
 
 Para acceder visite el siguiente enlace: https://console.cloud.google.com/
 
 
-Una vez registrados, nos debe aparecer la página principal con el Dashboard general de la aplicación:
+Una vez registrados, nos debe aparecer la página principal con el ``Dashboard`` general de la aplicación:
 
 ![1](docs/images/1_gc.PNG)
 
@@ -162,7 +172,7 @@ Una vez creado la maquina virtual del servidor procedemos a configurar el entorn
 
 ### Configuración Centos 7
 
-En primer lugar instalamos el entorno virtual de ```miniconda``` para configurar el entorno virtual de trabajo en producción. Procedemos pues a introducir las siguientes lineas de comandos en la consola:
+En primer lugar instalamos el entorno virtual de ```miniconda``` para configurar el entorno virtual de trabajo en producción. Procedemos pues a introducir las siguientes líneas de comandos en la consola:
 
 ```cmd
 ####  CentOS Configuration ####
@@ -269,7 +279,7 @@ cd ~
 git clone https://github.com/jaisenbe58r/ProductionTF2serving.git
 ```
 
-Vamos a proceder a descargar el modelo previamente entrenado a partir del siguiente [enlace](https://drive.google.com/drive/folders/1Z5m_-IV7xT0JtgQn3HKXn7dS0JpsSYPW?usp=sharing) y posteriormente colocarlo dentro de nuestro proyecto en la siguiente ruta ``/models/tf2x/tensorflow``. Esta ruta actuará como volumen de acceso para el contenedor de la API de tensorflow para acceder al modelo y poder hacer inferencia en el. 
+Vamos a proceder a descargar el modelo previamente entrenado a partir del siguiente [enlace](https://drive.google.com/drive/folders/1Z5m_-IV7xT0JtgQn3HKXn7dS0JpsSYPW?usp=sharing) y posteriormente colocarlo dentro de nuestro proyecto en la siguiente ruta ``~/ProductionTF2serving/models/tf2x/tensorflow``. Esta ruta actuará como volumen de acceso para el contenedor de la API de tensorflow para acceder al modelo y poder hacer inferencia en el. 
 
 En primer lugar creamos y añadimos la ruta a una variable de entorno de la siguiente manera:
 
@@ -305,7 +315,7 @@ unzip 1-20201222T160227Z-001.zip && rm -rf 1-20201222T160227Z-001.zip && cd ~
 #List downloaded models
 tree $(pwd)/ProductionTF2serving/models/
 ```
-El directorio ``models/`` quedaría de la siguiente manera:
+El directorio ``~/ProductionTF2serving/models/`` quedaría de la siguiente manera:
 ```
 $(pwd)/ProductionTF2serving/models/
 └── tf2x
@@ -322,9 +332,9 @@ $(pwd)/ProductionTF2serving/models/
 
 ## Despliegue de servicios con Docker swarm
 
-Docker Swarm es una herramienta integrada en el ecosistema de Docker que permite la gestión de un cluster de servidores. Pone a nuestra disposición una API con la que podemos administrar las  tareas y asignación de recursos de cada contenedor dentro de cada una de las máquinas. Dicha API nos permite gestionar el clúster como si se tratase de una sola máquina Docker.
+``Docker Swarm`` es una herramienta integrada en el ecosistema de ``Docker`` que permite la gestión de un clúster de servidores. Pone a nuestra disposición una ``API`` con la que podemos administrar las tareas y asignación de recursos de cada contenedor dentro de cada una de las máquinas. Dicha ``API`` nos permite gestionar el clúster como si se tratase de una sola máquina Docker.
 
-Para nuestro proyecto, se genera un clúster con docker swarm con 4 réplicas del microservicio de ```tensorflow/serving``` para servir las predicciones, 1 visualizador de contenedores docker en el clúster (```visualizer```), 1 microservicio de monitoreo de servicios (```prometheus```) y 1 microservicio de consulta y visualización (```grafana```):
+Para nuestro proyecto, se genera un clúster con ``docker swarm`` con 4 réplicas del microservicio de ```tensorflow/serving``` para servir las predicciones, 1 visualizador de contenedores docker en el clúster (```visualizer```), 1 microservicio de monitoreo de servicios (```prometheus```) y 1 microservicio de consulta y visualización (```grafana```):
 
 ```yml
 version: '3'
@@ -412,7 +422,7 @@ http://```<public IP>```:9001/
 
 ![52](docs\images\52_visualizer.PNG)
 
-Para eliminar el clúster de docker swarm se procede de la siguiente manera:
+Para eliminar el clúster de docker swarm (en el caso de que sea necesario) se procede de la siguiente manera:
 
 ```cmd
 # Remove stack
@@ -427,7 +437,7 @@ sudo systemctl stop docker
 
 ## Servicio Inferencia de modelos
 
-Vamos a testear 
+Primero que todo vamos a testear el servicio de tensorflow para la inferencia del modelo. Para ello hemos preparado un script en ``~/ProductionTF2serving/Deployment/test/test-tfserving-http.py`` que se encarga de lanzar una petición HTTP al servicio desplegado de tensorfow-serving:
 
 ```cmd
 #Validate deployed models:
@@ -445,11 +455,15 @@ python test-tfserving-http.py \
     --port 9501
 ```
 
+El resultado debería ser el siguiente:
+
+![56](docs\images\56_test_model.PNG)
+
 ## Servicio FastAPI 
 
-El servicio FastAPI se despliega externamente al clúster de docker swarm dentro del entorno virtual de Producción. Este servicio es la API que recibe las peticiones ```HTTP``` de los clientes y se encarga de comunicarse directamente con los microservicios servidores del modelo para realizar las predicciones y posteriormente devolver el resultado al cliente.
+El servicio FastAPI se despliega externamente al clúster de ``docker swarm`` dentro del entorno virtual de Producción. Este servicio es la ``API`` que recibe las peticiones ```HTTP``` de los clientes y se encarga de comunicarse directamente con los microservicios servidores del modelo para realizar las predicciones y posteriormente devolver el resultado al cliente.
 
-Para desplegar este el servicio Fast API procedemos de la siguiente manera:
+Para desplegar este el servicio ``FastAPI`` procedemos de la siguiente manera:
 
 ```cmd
 #### Start FastAPI service  ####
@@ -467,7 +481,9 @@ uvicorn fastapi_service:app --port 9000 --host 0.0.0.0
 
 ![55](docs\images\55_fastapi.PNG)
 
-De esta manera ja tendriamos nuestra api 
+De esta manera ya tendriamos nuestra ``API`` desplegada en producción y preparada para recibir peticiones de cualquier cliente.
+
+
 
 En caso de querer detener este servicio se ejecutará:
 
@@ -478,35 +494,49 @@ En caso de querer detener este servicio se ejecutará:
 conda deactivate
 ```
 
-## Monitorización
-
-Como hemos comentado anteriormente, hemos desplegado el microservicio de grafana y prometheus que nos permiten almacenar y visualizar las métricas del cluster en funcionamiento que previamente configuremos.
-
-Para acceder 
-
-```
-#### Monitoring ####
-
-# Prometheus: IP:9002
-
-# Grafana: IP:9003
-# >> admin/admin
-
-# Grafana Datasource:
-# >> public-ip:9002
-# >> server
-
-# Grafana dashboards to import
-https://grafana.com/grafana/dashboards?dataSource=prometheus
-
-```
 
 ## Prueba del modelo en Producción
 
-Para realizar una prueba sobre el modelo desplegado en producción, vamos a lanzar una petición HTTP a la API desplegada para este fin, a través de: ```http://<IP PUBLICA>:9000/model/predict/```. 
+Para realizar una prueba sobre el modelo desplegado en producción, vamos a lanzar una petición ``HTTP`` a la ``API`` desplegada para este fin, a través de: ```http://<IP PUBLICA>:9000/model/predict/```. 
 
-Lanzamos desde la consola la siguiente liea de comandos para predecir el resultado de la imagen con la ruta ```client\image_example.jpg```:
+En primer lugar descargamos una imagen de un ``GATO y/o PERRO`` en la carpeta de descargas de nuestro equipo local. Nos situamos desde la consola en el directorio de descargas y ejecutamos la siguiente linea de comandos para predecir el resultado de la imagen con la ruta ```C:\Users\USER\Downloads\image_example.jpg```:
 
 ```cmd
-curl -i -X POST -F "file=@client\image_example.jpg" http://<IP PUBLICA>:9000/model/predict/
+cd C:\Users\USER\Downloads
+curl -i -X POST -F "file=@image_example.jpg" http://<IP PUBLICA>:9000/model/predict/
 ```
+
+![90](docs\images\90_Predicciones_CURL.PNG)
+
+El resultado en nuestra imagen enviada sería:
+
+``{"success":true,"predictions":[{"label":"Cat","score":0.985424817}]}``
+
+ En el curso [Mirko J. Rodríguez - Udemy - Deep Learning aplicado: Despliegue de modelos TensorFlow 2.0](https://www.udemy.com/course/deep-learning-despliegue-tensorflow-mirko-rodriguez/) Mirko J. Rodríguez nos preparó una herramienta desarrollada en angular para hacer de cliente y enviar peticiones para predicciones sobre imágenes. 
+ 
+ Esta herramienta puede encontrarla en ``client\web\angular-client.html`` y se ejecuta directamente en su navegador. Una vez ejecutado, se selecciona la imagen a predecir y se pulsa sobre ``CLASSIFY`` para obtener los resultados de la inferencia. El resultado obtenido para nuestra imagen de prueba es el siguiente:
+
+
+![98](docs\images\98_Angular.PNG)
+
+
+
+## Monitorización
+
+Como hemos comentado anteriormente, hemos desplegado el microservicio de ``grafana`` y ``prometheus`` que nos permiten almacenar y visualizar las métricas del cluster en funcionamiento que previamente configuremos.
+
+Para acceder a ``grafana`` se procede de la siguiente manera:
+
+http://```<public IP>```:9001/
+
+```
+usuario/contraseña >> admin/admin
+```
+
+Una vez dentro de la aplicación, seleccionamos ``Add data source`` -> ``Prometheus`` -> ``URL: http://34.123.54.217:9002/`` -> ``Save Test``. Con ello ya tenemos acceso a todas las métricas que nos porporciona ``prometheus`` y que ``grafana`` se encarga de monitorizar en sus dashboards personalizables:
+
+![99](docs\images\99_Metrics.PNG)
+
+Puede acceder a la [web de grafana](https://grafana.com/grafana/dashboards?dataSource=prometheus) para conocer todas las posibilidades de crear y descargarse nuevos Dashboaards.
+
+

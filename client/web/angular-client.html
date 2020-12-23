@@ -13,7 +13,7 @@
 <body ng-app="myApp" ng-cloak bgcolor="black" ng-controller="myCtrl" layout="column">
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <span>Flowers classificator</span>
+      <span>Cat/Dog classificator</span>
     </div>
   </md-toolbar>
 
@@ -81,7 +81,7 @@
 
     app.controller('myCtrl', ['$scope', '$http',
       function($scope, $http) {
-        $scope.rp = "http://34.123.54.217/:9000";
+        $scope.rp = "http://34.123.54.217:9000";
         $scope.loading = false;
         $scope.success = false;
       	$scope.error = false;
