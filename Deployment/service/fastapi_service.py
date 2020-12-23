@@ -15,19 +15,16 @@ import json
 import numpy as np
 from tensorflow.keras.preprocessing import image
 
-UPLOAD_FOLDER = 'uploads/images'
-# UPLOAD_FOLDER = '~/ProductionTF2serving/Deployment/service/uploads/images'
+# UPLOAD_FOLDER = 'uploads/images'
+UPLOAD_FOLDER = '~/ProductionTF2serving/Deployment/service/uploads/images'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 SEED = 99
-IMG_WIDTH = 300
-IMG_HEIGHT = 300
+IMG_WIDTH = 380
+IMG_HEIGHT = 380
 NUM_CLASSES = 8
 
-CLASSES = ["lactarius deliciosus", "Lactarius sanguifluus", 
-           "Agaricus campestris", "Boletus Edulis", "Amanita Caesaera", 
-           "Cantharellus Cibarius", "Hygrophorus latitabundus", 
-           "cratarellus comucopioides"] 
+CLASSES = ["Cat", "Dog"] 
 
 #Main definition for FastAPI
 app = FastAPI()

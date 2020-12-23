@@ -283,9 +283,9 @@ export MODEL_PB=$(pwd)/models/tf2x/tensorflow
 
 En segundo lugar seleccionamos la opción de ``Upload file`` para subir la carpeta comprimida que se han descargado en el paso anterior:
 
-![23](docs\images\50_subir_archivos.PNG)
+![24](docs\images\50_subir_archivos.PNG)
 
-![23](docs\images\51_subir_archivos.PNG)
+![25](docs\images\51_subir_archivos.PNG)
 
 El archivo subido se encuentra en el directorio ``/home/$USER del usuario``.
 
@@ -406,10 +406,14 @@ docker service ls
 docker container ls
 ```
 
+![26](docs\images\51_servicios.PNG)
+
+
 Para acceder al visualizador del clúster, basta con introducir en su navegador predeterminado la siguiente ruta:
 
 http://```<public IP>```:9001/
 
+![52](docs\images\52_visualizer.PNG)
 
 Para eliminar el clúster de docker swarm se procede de la siguiente manera:
 
@@ -434,14 +438,19 @@ Para desplegar este el servicio Fast API procedemos de la siguiente manera:
 #### Start FastAPI service  ####
 
 # starting the service
+cd ~
 cd $(pwd)/ProductionTF2serving/Deployment/service
 
 # Activando environment PROD
 conda activate PROD
 
 # starting web-service
-uvicorn fastapi_service_PROD:app --port 9000 --host 0.0.0.0
+uvicorn fastapi_service:app --port 9000 --host 0.0.0.0
 ```
+
+![55](docs\images\55_fastapi.PNG)
+
+De esta manera ja tendriamos nuestra api 
 
 En caso de querer detener este servicio se ejecutará:
 
