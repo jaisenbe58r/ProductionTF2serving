@@ -14,7 +14,7 @@ https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/m
 <div align="center">
   <table class="tfo-notebook-buttons" align="left">
     <td>
-      <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/iAApi-QAS-BERT/blob/main/SQUAD_es_GPU.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
+      <a target="_blank" href="https://colab.research.google.com/github/jaisenbe58r/ProductionTF2serving/blob/main/concept/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
     </td>
     <td>
       <a target="_blank" href="https://github.com/jaisenbe58r/ProductionTF2serving/blob/main/PipelineClasificationImages.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a>
@@ -105,7 +105,7 @@ Una vez registrados, nos debe aparecer la página principal con el ``Dashboard``
 
 ![1](docs/images/1_gc.PNG)
 
-Seguidamente rocedemos a crear un nuevo proyecto de trabajo, pulsamos sobre el desplegable de proyectos, ```Despliegue TF2x``` en mi caso, y nos aparece la siguiente ventana emergente:
+Seguidamente procedemos a crear un nuevo proyecto de trabajo, pulsamos sobre el desplegable de proyectos, ```Despliegue TF2x``` en mi caso, y nos aparece la siguiente ventana emergente:
 
 ![2](docs/images/2_gc_crear_proyecto.PNG)
 
@@ -113,7 +113,7 @@ Pinchamos sobre ```NUEVO PROYECTO``` y nos aparece la ventana creación de un nu
 
 ![3](docs/images/3_gc_crear_proyecto.PNG)
 
-A continuación, vamos a crear la maquina virtual para el despliegue. En este caso vamos a utilizar una máquina con el so de Centos7. Para poder crear y configurar dicha máquina, primero hacemos una búsqueda ```Centos```y seleccionamos la ```CentOS 7```que vamos a dar de alta:
+A continuación, vamos a crear la máquina virtual para el despliegue. En este caso vamos a utilizar una máquina con el so de Centos7. Para poder crear y configurar dicha máquina, primero hacemos una búsqueda ```Centos```y seleccionamos la ```CentOS 7```que vamos a dar de alta:
 
 ![5](docs/images/5_gc_crear_mv.PNG)
 
@@ -131,15 +131,15 @@ Una vez dentro, procedemos a configurar la máquina. en nuestro caso vamos a con
 
 ![9](docs/images/9_gc_conf_mv_2.PNG)
 
-Una vez configurada nos aparecera la siguiente ventana con nuestra máquina:
+Una vez configurada nos aparecerá la siguiente ventana con nuestra máquina:
 
 ![10](docs/images/10_gc_end.PNG)
 
-Como podeis observar también nos indica la IP externa de la máquina. Para acceder la la consola necesitaremos pulsar en el botón de ```PLAY``` y en el desplegable de ```SSH`` seleccionar la opción de abrir en una nueva pestaña del navegador:
+Como podeis observar también nos indica la IP externa de la máquina. Para acceder la consola necesitaremos pulsar en el botón de ```PLAY``` y en el desplegable de ``SSH`` seleccionar la opción de abrir en una nueva pestaña del navegador:
 
 ![12](docs/images/12_gc_cmd.PNG)
 
-Con ello, ya tenemos acceso a la consola de nuestro servidor, pero antes de seguir nos haria falta configurar las reglas del cortafuegos para permitir el acceso a través de los puertos de cada servicio.
+Con ello, ya tenemos acceso a la consola de nuestro servidor, pero antes de seguir nos haría falta configurar las reglas del cortafuegos para permitir el acceso a través de los puertos de cada servicio.
 
 La forma de acceder a esta configuración es pulsando en el desplegable de ```SSH``` en la opción de ```ver detalles de red```:
 
@@ -163,7 +163,7 @@ Una vez dentro damos de alta todos los puertos utilizados en los servicios del p
 ![23](docs/images/23_gc_red_3.PNG)
 
 
-Con todos estos pasos ya tendriamos acceso a la maquina virtual del servidor y podriamos proceder a configurar el entorno de trabajo y a dar de alta los servicios de nuestro proyecto.
+Con todos estos pasos ya tendríamos acceso a la máquina virtual del servidor y podremos proceder a configurar el entorno de trabajo y a dar de alta los servicios de nuestro proyecto.
 
 
 ## Configuración del entorno de trabajo
@@ -293,9 +293,9 @@ mkdir -p $MODEL_PB
 
 En segundo lugar seleccionamos la opción de ``Upload file`` para subir la carpeta comprimida que se han descargado en el paso anterior:
 
-![24](docs\images\50_subir_archivos.PNG)
+![50](docs\images\50_subir_archivos.PNG)
 
-![25](docs\images\51_subir_archivos.PNG)
+![51](docs\images\51_subir_archivos.PNG)
 
 El archivo subido se encuentra en el directorio ``/home/$USER del usuario``.
 
@@ -379,7 +379,7 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
 ```
 
-Para poder desplegar el clúster de docker swarm vamos a ejecutar las siguientes lineas de comandos:
+Para poder desplegar el clúster de ``docker swarm`` vamos a ejecutar las siguientes líneas de comandos:
 
 
 ```cmd
@@ -403,9 +403,9 @@ docker stack deploy -c compose-config-PROD.yml PROD-STACK
 ```
 
 
-## Chequear servivios activos
+## Chequear servicios activos
 
-Una vez desplejado el clúster con todos los microservicios vamos a chequear que dichos servicios estén activos. Para ello vamos a ejecutar lo siguiente:
+Una vez desplegado el clúster con todos los microservicios vamos a chequear que dichos servicios estén activos. Para ello vamos a ejecutar lo siguiente:
 
 ```cmd
 docker stack ls
@@ -413,7 +413,7 @@ docker service ls
 docker container ls
 ```
 
-![26](docs\images\51_servicios.PNG)
+![51](docs\images\51_servicios.PNG)
 
 
 Para acceder al visualizador del clúster, basta con introducir en su navegador predeterminado la siguiente ruta:
@@ -437,7 +437,7 @@ sudo systemctl stop docker
 
 ## Servicio Inferencia de modelos
 
-Primero que todo vamos a testear el servicio de tensorflow para la inferencia del modelo. Para ello hemos preparado un script en ``~/ProductionTF2serving/Deployment/test/test-tfserving-http.py`` que se encarga de lanzar una petición HTTP al servicio desplegado de tensorfow-serving:
+Primero que todo vamos a testear el servicio de ``tensorflow`` para la inferencia del modelo. Para ello hemos preparado un script en ``~/ProductionTF2serving/Deployment/test/test-tfserving-http.py`` que se encarga de lanzar una petición HTTP al servicio desplegado de tensorfow-serving:
 
 ```cmd
 #Validate deployed models:
@@ -481,7 +481,7 @@ uvicorn fastapi_service:app --port 9000 --host 0.0.0.0
 
 ![55](docs\images\55_fastapi.PNG)
 
-De esta manera ya tendriamos nuestra ``API`` desplegada en producción y preparada para recibir peticiones de cualquier cliente.
+De esta manera ya tendríamos nuestra ``API`` desplegada en producción y preparada para recibir peticiones de cualquier cliente.
 
 
 
@@ -499,7 +499,7 @@ conda deactivate
 
 Para realizar una prueba sobre el modelo desplegado en producción, vamos a lanzar una petición ``HTTP`` a la ``API`` desplegada para este fin, a través de: ```http://<IP PUBLICA>:9000/model/predict/```. 
 
-En primer lugar descargamos una imagen de un ``GATO y/o PERRO`` en la carpeta de descargas de nuestro equipo local. Nos situamos desde la consola en el directorio de descargas y ejecutamos la siguiente linea de comandos para predecir el resultado de la imagen con la ruta ```C:\Users\USER\Downloads\image_example.jpg```:
+En primer lugar descargamos una imagen de un ``GATO y/o PERRO`` en la carpeta de descargas de nuestro equipo local. Nos situamos desde la consola en el directorio de descargas y ejecutamos la siguiente línea de comandos para predecir el resultado de la imagen con la ruta ```C:\Users\USER\Downloads\image_example.jpg```:
 
 ```cmd
 cd C:\Users\USER\Downloads
@@ -533,10 +533,10 @@ http://```<public IP>```:9001/
 usuario/contraseña >> admin/admin
 ```
 
-Una vez dentro de la aplicación, seleccionamos ``Add data source`` -> ``Prometheus`` -> ``URL: http://34.123.54.217:9002/`` -> ``Save Test``. Con ello ya tenemos acceso a todas las métricas que nos porporciona ``prometheus`` y que ``grafana`` se encarga de monitorizar en sus dashboards personalizables:
+Una vez dentro de la aplicación, seleccionamos ``Add data source`` -> ``Prometheus`` -> ``URL: http://34.123.54.217:9002/`` -> ``Save Test``. Con ello ya tenemos acceso a todas las métricas que nos proporciona ``prometheus`` y que ``grafana`` se encarga de monitorizar en sus dashboards personalizables:
 
 ![99](docs\images\99_Metrics.PNG)
 
-Puede acceder a la [web de grafana](https://grafana.com/grafana/dashboards?dataSource=prometheus) para conocer todas las posibilidades de crear y descargarse nuevos Dashboaards.
+Puede acceder a la [web de grafana](https://grafana.com/grafana/dashboards?dataSource=prometheus) para conocer todas las posibilidades de crear y descargarse nuevos Dashboards.
 
 
